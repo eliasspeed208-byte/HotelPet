@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Hotel Pet | Reservas</title><link rel="stylesheet" href="../css/style.css"></head>
+<body data-page="reservas"><div class="container">
+<aside class="sidebar"><a class="logo" href="../index.html"><h2>Hotel Pet</h2><span>Gerenciamento</span></a>
+<nav class="menu"><a href="../index.html" data-nav="dashboard">⌂ Painel</a><a href="reservas.html" data-nav="reservas">▣ Reservas</a><a href="pets.html" data-nav="pets">🐾 Pets</a><a href="usuarios.html" data-nav="usuarios">♙ Usuários</a><a href="configuracoes.html" data-nav="configuracoes">⚙ Configurações</a></nav>
+<div class="sidebar-footer"><p>Sistema Hotel Pet</p><small>Versão 1.0</small></div></aside>
+<main class="main-content"><header class="topbar"><div><h1>Reservas</h1><p>Cadastro e acompanhamento de hospedagens</p></div><div class="profile"><div class="avatar">G</div><div><strong>Gerente</strong><small>Administrador</small></div></div></header>
+<section class="panel"><div class="section-header"><div><h2>Reservas cadastrados</h2><p class="muted">Gerencie as informações do sistema.</p></div><button class="button" id="btn-novo">+ Novo cadastro</button></div>
+<form id="cadastro-form" class="form-grid hidden"><label>Nome do pet<input name="pet" type="text"  required></label><label>Nome do tutor<input name="tutor" type="text"  required></label><label>Data de entrada<input name="entrada" type="date"  required></label><label>Data de saída<input name="saida" type="date"  required></label><label>Valor total (R$)<input name="valor" type="number" min="0" step="0.01" required></label><label>Status<input name="status" type="select"  required></label><div class="form-actions"><button class="button" type="submit">Salvar</button><button class="button secondary" type="button" id="btn-cancelar">Cancelar</button></div></form>
+<div class="table-container"><table><thead><tr><th>Pet</th><th>Tutor</th><th>Entrada</th><th>Saída</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead><tbody id="registros-tbody"></tbody></table></div></section></main></div>
+<script src="../js/app.js"></script></body></html>
