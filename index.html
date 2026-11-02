@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Pet | Painel Gerencial</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <h2>Hotel Pet</h2>
+                <span>Gerenciamento</span>
+            </div>
+
+            <nav class="menu">
+                <a href="index.html" class="active">⌂ Painel</a>
+                <a href="pages/reservas.html">▣ Reservas</a>
+                <a href="pages/pets.html">🐾 Pets</a>
+                <a href="pages/usuarios.html">♙ Usuários</a>
+                <a href="pages/configuracoes.html">⚙ Configurações</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Sistema Hotel Pet</p>
+                <small>Versão 1.0</small>
+            </div>
+
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Painel Gerencial</h1>
+                    <p>Bem-vindo ao sistema Hotel Pet!</p>
+                </div>
+
+                <div class="profile">
+                    <div class="avatar">G</div>
+                    <div>
+                        <strong>Gerente</strong>
+                        <small>Administrador</small>
+                    </div>
+                </div>
+            </header>
+
+            <!-- INDICADORES -->
+            <section class="dashboard">
+
+                <h2>Visão geral</h2>
+
+                <div class="cards">
+
+                    <article class="card">
+                        <span>Reservas</span>
+                        <h3 id="total-reservas">0</h3>
+                        <p>Total de reservas</p>
+                    </article>
+
+                    <article class="card">
+                        <span>Pets cadastrados</span>
+                        <h3 id="total-pets">0</h3>
+                        <p>Animais registrados</p>
+                    </article>
+
+                    <article class="card">
+                        <span>Vagas disponíveis</span>
+                        <h3 id="total-vagas">20</h3>
+                        <p>Capacidade disponível</p>
+                    </article>
+
+                    <article class="card">
+                        <span>Usuários</span>
+                        <h3 id="total-usuarios">0</h3>
+                        <p>Usuários cadastrados</p>
+                    </article>
+
+                </div>
+
+            </section>
+
+            <!-- RESERVAS RECENTES -->
+            <section class="recent-reservations">
+
+                <div class="section-header">
+                    <h2>Reservas recentes</h2>
+                    <a href="pages/reservas.html">Ver todas</a>
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pet</th>
+                                <th>Proprietário</th>
+                                <th>Entrada</th>
+                                <th>Saída</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tabela-reservas">
+                            <tr>
+                                <td colspan="5">
+                                    Nenhuma reserva cadastrada.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="js/app.js"></script>
+
+</body>
+</html>

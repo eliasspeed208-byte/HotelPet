@@ -1,0 +1,238 @@
+
+/* CONFIGURAÇÕES GERAIS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* MENU LATERAL */
+
+.sidebar {
+    width: 250px;
+    background-color: #244b43;
+    color: white;
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.logo {
+    padding: 10px;
+    margin-bottom: 40px;
+}
+
+.logo h2 {
+    font-size: 26px;
+}
+
+.logo span {
+    font-size: 13px;
+    color: #c5d9d2;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    padding: 14px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.menu a:hover,
+.menu a.active {
+    background-color: #3b7567;
+}
+
+.sidebar-footer {
+    font-size: 13px;
+    color: #c5d9d2;
+    padding: 10px;
+}
+
+/* CONTEÚDO PRINCIPAL */
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    min-width: 0;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.topbar h1 {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.topbar p {
+    color: #777;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile small {
+    display: block;
+    color: #777;
+    margin-top: 4px;
+}
+
+.avatar {
+    background-color: #3b7567;
+    color: white;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* INDICADORES */
+
+.dashboard h2,
+.recent-reservations h2 {
+    margin-bottom: 20px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card span {
+    color: #777;
+    font-size: 14px;
+}
+
+.card h3 {
+    font-size: 30px;
+    margin: 15px 0;
+    color: #244b43;
+}
+
+.card p {
+    font-size: 13px;
+    color: #888;
+}
+
+/* TABELA */
+
+.recent-reservations {
+    margin-top: 40px;
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header a {
+    color: #28715e;
+    text-decoration: none;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    color: #777;
+    font-size: 13px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        width: 75px;
+        padding: 15px 5px;
+    }
+
+    .logo h2 {
+        font-size: 14px;
+    }
+
+    .logo span,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .menu a {
+        font-size: 12px;
+        padding: 12px 5px;
+        text-align: center;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
