@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários - HotelPet</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body data-page="usuarios">
+
+    <div class="container">
+
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <span>🐾</span>
+                <div>
+                    <h2>HotelPet</h2>
+                    <p>Gerenciamento</p>
+                </div>
+            </div>
+
+            <nav class="menu">
+                <a href="../index.html">
+                    <span>📊</span>
+                    Dashboard
+                </a>
+
+                <a href="reservas.html">
+                    <span>📅</span>
+                    Reservas
+                </a>
+
+                <a href="pets.html">
+                    <span>🐶</span>
+                    Pets
+                </a>
+
+                <a href="usuarios.html" class="active">
+                    <span>👥</span>
+                    Usuários
+                </a>
+
+                <a href="configuracoes.html">
+                    <span>⚙️</span>
+                    Configurações
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>HotelPet © 2026</p>
+            </div>
+
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Gerenciar usuários</h1>
+                    <p>Cadastre e gerencie os usuários do sistema.</p>
+                </div>
+
+                <div class="profile">
+                    <div class="avatar">G</div>
+                    <div>
+                        <strong>Gerente</strong>
+                        <span>Administrador</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="dashboard">
+
+                <!-- INDICADORES -->
+                <div class="dashboard-cards">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Total de usuários</span>
+                            <div class="card-icon">👥</div>
+                        </div>
+                        <strong class="card-value" id="total-usuarios">0</strong>
+                        <p class="card-description">Usuários cadastrados</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Gerentes</span>
+                            <div class="card-icon">👑</div>
+                        </div>
+                        <strong class="card-value" id="total-gerentes">0</strong>
+                        <p class="card-description">Gerentes cadastrados</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Funcionários</span>
+                            <div class="card-icon">💼</div>
+                        </div>
+                        <strong class="card-value" id="total-funcionarios">0</strong>
+                        <p class="card-description">Funcionários cadastrados</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Clientes</span>
+                            <div class="card-icon">🙋</div>
+                        </div>
+                        <strong class="card-value" id="total-clientes">0</strong>
+                        <p class="card-description">Clientes cadastrados</p>
+                    </div>
+
+                </div>
+
+                <!-- CADASTRO DE USUÁRIOS -->
+                <section class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h2>Usuários cadastrados</h2>
+                            <p>Gerencie os dados e os perfis dos usuários.</p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="btn-novo-usuario">
+                            + Novo usuário
+                        </button>
+                    </div>
+
+                    <!-- FORMULÁRIO -->
+                    <form id="form-usuario" class="form-container hidden">
+
+                        <input type="hidden" id="id" name="id">
+
+                        <div class="form-group">
+                            <label for="nome">Nome completo</label>
+                            <input
+                                type="text"
+                                id="nome"
+                                name="nome"
+                                placeholder="Digite o nome completo"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="exemplo@email.com"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input
+                                type="tel"
+                                id="telefone"
+                                name="telefone"
+                                placeholder="(00) 00000-0000"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tipo">Tipo de usuário</label>
+                            <select id="tipo" name="tipo" required>
+                                <option value="">Selecione o perfil</option>
+                                <option value="Gerente">Gerente</option>
+                                <option value="Funcionário">Funcionário</option>
+                                <option value="Cliente">Cliente</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions">
+                            <button
+                                type="submit"
+                                class="btn btn-primary">
+                                Salvar usuário
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                id="btn-cancelar-usuario">
+                                Cancelar
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <!-- PESQUISA -->
+                    <div class="form-group search-box">
+                        <label for="busca-usuarios">Pesquisar usuário</label>
+                        <input
+                            type="search"
+                            id="busca-usuarios"
+                            placeholder="Buscar por nome ou e-mail...">
+                    </div>
+
+                    <!-- TABELA -->
+                    <div class="table-container">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Telefone</th>
+                                    <th>Tipo de usuário</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabela-usuarios">
+                                <tr>
+                                    <td colspan="5">
+                                        Nenhum usuário cadastrado.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+            <footer class="footer">
+                <p>HotelPet - Sistema de Gerenciamento de Hotel para Pets</p>
+            </footer>
+
+        </main>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="../js/app.js"></script>
+
+    <!-- CONTROLE DO FORMULÁRIO -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const botaoNovo = document.getElementById("btn-novo-usuario");
+            const botaoCancelar = document.getElementById("btn-cancelar-usuario");
+            const formulario = document.getElementById("form-usuario");
+
+            botaoNovo.addEventListener("click", function () {
+                formulario.classList.remove("hidden");
+                formulario.reset();
+                document.getElementById("id").value = "";
+            });
+
+            botaoCancelar.addEventListener("click", function () {
+                formulario.reset();
+                formulario.classList.add("hidden");
+            });
+
+        });
+    </script>
+
+</body>
+</html>

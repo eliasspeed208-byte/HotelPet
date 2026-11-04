@@ -1,238 +1,1012 @@
 
-/* CONFIGURAÇÕES GERAIS */
+/* =========================================================
+   HOTELPET - FOLHA DE ESTILOS COMPLETA
+   Identidade visual: elegante, moderna e acolhedora
+   Arquivo: css/style.css
+   ========================================================= */
+
+/* =========================================================
+   1. CORES E CONFIGURAÇÕES GERAIS
+   ========================================================= */
+
+:root {
+    --primary: #668675;
+    --primary-dark: #405F50;
+    --primary-light: #EAF0EC;
+    --secondary: #A9BCAF;
+
+    --background: #F7F8F6;
+    --surface: #FFFFFF;
+
+    --text: #303B35;
+    --text-light: #7B8780;
+    --border: #E5EAE6;
+
+    --success: #5D806A;
+    --success-bg: #EDF4EF;
+
+    --warning: #B58B53;
+    --warning-bg: #F8F2E9;
+
+    --danger: #B96D6D;
+    --danger-bg: #F9EEEE;
+
+    --info: #66869A;
+    --info-bg: #EDF3F6;
+
+    --shadow: 0 5px 20px rgba(48, 59, 53, 0.045);
+    --radius: 14px;
+}
+
+/* =========================================================
+   2. RESET E CONFIGURAÇÕES BÁSICAS
+   ========================================================= */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    background-color: #f4f6f9;
-    color: #333;
-}
-
-.container {
-    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
     min-height: 100vh;
 }
 
-/* MENU LATERAL */
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    line-height: 1.3;
+}
+
+/* =========================================================
+   3. ESTRUTURA PRINCIPAL
+   ========================================================= */
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* =========================================================
+   4. MENU LATERAL
+   ========================================================= */
 
 .sidebar {
-    width: 250px;
-    background-color: #244b43;
-    color: white;
-    padding: 25px 15px;
+    flex: 0 0 245px;
+    width: 245px;
+    min-width: 245px;
+    min-height: 100vh;
+
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+
+    background: var(--primary-dark);
+    color: #FFFFFF;
+
+    padding: 28px 14px;
 }
 
-.logo {
-    padding: 10px;
-    margin-bottom: 40px;
-}
+/* Logo */
 
-.logo h2 {
-    font-size: 26px;
-}
-
-.logo span {
-    font-size: 13px;
-    color: #c5d9d2;
-}
-
-.menu {
+.sidebar .logo {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
+    align-items: flex-start;
+    gap: 3px;
 
-.menu a {
+    padding: 8px 10px 34px;
+
+    color: #FFFFFF;
     text-decoration: none;
-    color: white;
-    padding: 14px;
-    border-radius: 8px;
-    transition: 0.3s;
+    white-space: nowrap;
 }
 
-.menu a:hover,
-.menu a.active {
-    background-color: #3b7567;
+.sidebar .logo h2 {
+    font-size: 23px;
+    font-weight: 700;
+    margin: 0;
+    color: #FFFFFF;
 }
+
+.sidebar .logo span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #E2EBE5;
+}
+
+/* Navegação */
+
+.sidebar .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar .menu a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 13px 14px;
+
+    border-radius: 9px;
+
+    color: #E8EFEA;
+    font-size: 14px;
+    text-decoration: none;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar .menu a:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #FFFFFF;
+}
+
+.sidebar .menu a.active {
+    background: #FFFFFF;
+    color: var(--primary-dark);
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar .menu a span {
+    font-size: 18px;
+}
+
+/* Rodapé do menu */
 
 .sidebar-footer {
-    font-size: 13px;
-    color: #c5d9d2;
-    padding: 10px;
+    margin-top: auto;
+    padding: 20px 12px 0;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+
+    color: #DCE7DF;
+    font-size: 12px;
 }
 
-/* CONTEÚDO PRINCIPAL */
+.sidebar-footer p {
+    margin-bottom: 5px;
+}
+
+/* =========================================================
+   5. CONTEÚDO PRINCIPAL
+   ========================================================= */
 
 .main-content {
     flex: 1;
-    padding: 30px;
     min-width: 0;
+    padding: 34px;
+    background: var(--background);
+    overflow-x: hidden;
 }
+
+/* =========================================================
+   6. CABEÇALHO
+   ========================================================= */
 
 .topbar {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+
+    width: 100%;
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
 .topbar h1 {
     font-size: 27px;
-    margin-bottom: 8px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    margin-bottom: 5px;
 }
 
 .topbar p {
-    color: #777;
+    color: var(--text-light);
+    font-size: 14px;
 }
+
+/* Perfil do gerente */
 
 .profile {
     display: flex;
     align-items: center;
     gap: 12px;
-}
 
-.profile small {
-    display: block;
-    color: #777;
-    margin-top: 4px;
+    margin-left: auto;
+    flex-shrink: 0;
 }
 
 .avatar {
-    background-color: #3b7567;
-    color: white;
     width: 42px;
     height: 42px;
-    border-radius: 50%;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: var(--primary-dark);
+
     font-weight: bold;
+    font-size: 16px;
 }
 
-/* INDICADORES */
-
-.dashboard h2,
-.recent-reservations h2 {
-    margin-bottom: 20px;
+.profile > div:last-child {
+    display: flex;
+    flex-direction: column;
 }
 
-.cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+.profile-info {
+    display: flex;
+    flex-direction: column;
 }
 
-.card {
-    background-color: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.card span {
-    color: #777;
+.profile strong,
+.profile-info strong {
     font-size: 14px;
 }
 
-.card h3 {
-    font-size: 30px;
-    margin: 15px 0;
-    color: #244b43;
+.profile small,
+.profile-info small {
+    color: var(--text-light);
+    font-size: 12px;
 }
 
-.card p {
+/* =========================================================
+   7. TÍTULOS E DESCRIÇÕES
+   ========================================================= */
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.section-description {
+    color: var(--text-light);
+    margin-bottom: 24px;
+}
+
+.muted {
+    color: var(--text-light);
     font-size: 13px;
-    color: #888;
 }
 
-/* TABELA */
+/* =========================================================
+   8. CARTÕES DO PAINEL E ACESSO RÁPIDO
+   ========================================================= */
 
-.recent-reservations {
-    margin-top: 40px;
-    background-color: white;
+.dashboard-cards,
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 28px;
+}
+
+/* Cartões */
+
+.card {
+    min-width: 0;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    padding: 24px;
+
+    box-shadow: var(--shadow);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 9px 24px rgba(48, 59, 53, 0.08);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.card-title {
+    color: var(--text-light);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.card-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+    background: var(--primary-light);
+    color: var(--primary);
+
+    font-size: 20px;
+}
+
+.card-value {
+    display: block;
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--text);
+    margin-bottom: 5px;
+}
+
+.card-description {
+    color: var(--text-light);
+    font-size: 12px;
+}
+
+/* Cartões do HTML do painel */
+
+.cards .card h3 {
+    font-size: 27px;
+    color: var(--primary-dark);
+    margin: 12px 0;
+}
+
+.cards .card p,
+.cards .card span {
+    color: var(--text-light);
+}
+
+/* =========================================================
+   9. PAINÉIS E SEÇÕES
+   ========================================================= */
+
+.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
     padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+
+    box-shadow: var(--shadow);
 }
 
+.panel-header,
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-.section-header a {
-    color: #28715e;
-    text-decoration: none;
+.panel-header h2,
+.section-header h2 {
+    color: var(--text);
+    margin-bottom: 4px;
 }
+
+.panel-header p,
+.section-header p {
+    color: var(--text-light);
+    font-size: 13px;
+}
+
+/* =========================================================
+   10. BOTÕES
+   ========================================================= */
+
+.btn,
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    border: 1px solid transparent;
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+    text-decoration: none;
+
+    transition: background 0.2s ease, color 0.2s ease,
+                border-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Botão principal */
+
+.btn-primary,
+.btn-success,
+.button {
+    background: var(--primary);
+    color: #FFFFFF;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.button:hover {
+    background: var(--primary-dark);
+    color: #FFFFFF;
+}
+
+/* Botão secundário */
+
+.btn-secondary {
+    background: #FFFFFF;
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-light);
+}
+
+/* Botão de perigo */
+
+.btn-danger {
+    background: var(--danger);
+    color: #FFFFFF;
+}
+
+.btn-danger:hover {
+    background: #A85D5D;
+}
+
+/* Botão de atenção */
+
+.btn-warning {
+    background: var(--warning);
+    color: #FFFFFF;
+}
+
+/* Tamanhos */
+
+.btn-sm {
+    padding: 7px 12px;
+    font-size: 12px;
+}
+
+/* =========================================================
+   11. FORMULÁRIOS
+   ========================================================= */
+
+.form-container {
+    margin-top: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* Campos */
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.search-container input,
+.filters input,
+.filters select,
+.panel input,
+.panel select,
+.panel textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 43px;
+
+    padding: 11px 14px;
+
+    border: 1px solid #DFE6E1;
+    border-radius: 9px;
+
+    background: #FCFDFC;
+    color: var(--text);
+
+    outline: none;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Foco nos campos */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.search-container input:focus,
+.filters input:focus,
+.filters select:focus,
+.panel input:focus,
+.panel select:focus,
+.panel textarea:focus {
+    border-color: #819D8D;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(102, 134, 117, 0.12);
+}
+
+/* Placeholder */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder,
+.search-container input::placeholder {
+    color: #A0AAA3;
+}
+
+/* Área de texto */
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Campo ocupando a linha inteira */
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Ações do formulário */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+/* =========================================================
+   12. ELEMENTOS OCULTOS
+   ========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================================================
+   13. TABELAS
+   ========================================================= */
 
 .table-container {
+    width: 100%;
     overflow-x: auto;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: #FFFFFF;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    background: #FFFFFF;
+    text-align: left;
 }
 
-th, td {
-    padding: 16px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
+thead {
+    background: #F2F5F2;
 }
 
 th {
-    color: #777;
+    padding: 15px 18px;
+
+    font-size: 12px;
+    font-weight: 700;
+    color: #66766C;
+
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+td {
+    padding: 15px 18px;
+    font-size: 13px;
+
+    border-bottom: 1px solid #EDF1EE;
+    vertical-align: middle;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background: #F8FAF8;
+}
+
+td strong {
+    font-weight: 600;
+}
+
+/* Mensagem de tabela vazia */
+
+.empty,
+.empty-state {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-light);
+}
+
+.empty-state span {
+    display: block;
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.empty-state h3 {
+    color: var(--text);
+    margin-bottom: 5px;
+}
+
+/* =========================================================
+   14. STATUS DAS RESERVAS
+   ========================================================= */
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 11px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.status-confirmada {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.status-em-andamento {
+    background: var(--info-bg);
+    color: var(--info);
+}
+
+.status-cancelada {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+.status-pendente {
+    background: var(--warning-bg);
+    color: var(--warning);
+}
+
+/* =========================================================
+   15. AÇÕES DAS TABELAS
+   ========================================================= */
+
+.table-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.table-actions button {
+    border: none;
+    background: transparent;
+
+    padding: 6px;
+    border-radius: 6px;
+
+    font-size: 15px;
+}
+
+.table-actions button:hover {
+    background: var(--primary-light);
+}
+
+/* =========================================================
+   16. MENSAGENS DO SISTEMA
+   ========================================================= */
+
+.message {
+    padding: 13px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
     font-size: 13px;
 }
 
-/* RESPONSIVIDADE */
+.message-success {
+    background: var(--success-bg);
+    color: var(--success);
+}
 
-@media (max-width: 900px) {
+.message-error {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+.message-info {
+    background: var(--info-bg);
+    color: var(--info);
+}
+
+/* =========================================================
+   17. PESQUISA
+   ========================================================= */
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-container input {
+    width: 100%;
+    max-width: 350px;
+}
+
+/* =========================================================
+   18. FILTROS
+   ========================================================= */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filters select,
+.filters input {
+    width: auto;
+}
+
+/* =========================================================
+   19. RODAPÉ
+   ========================================================= */
+
+.footer {
+    margin-top: 30px;
+    padding: 20px 0;
+
+    text-align: center;
+    color: var(--text-light);
+
+    font-size: 12px;
+}
+
+/* =========================================================
+   20. RESPONSIVIDADE - TABLETS
+   ========================================================= */
+
+@media (max-width: 1200px) {
+    .dashboard-cards,
     .cards {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .main-content {
+        padding: 25px;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     .sidebar {
-        width: 75px;
-        padding: 15px 5px;
+        flex: 0 0 210px;
+        width: 210px;
+        min-width: 210px;
     }
 
-    .logo h2 {
-        font-size: 14px;
+    .main-content {
+        padding: 20px;
     }
 
-    .logo span,
-    .sidebar-footer {
-        display: none;
+    .form-grid {
+        grid-template-columns: 1fr;
     }
 
-    .menu a {
+    .form-group.full-width {
+        grid-column: auto;
+    }
+}
+
+/* =========================================================
+   21. RESPONSIVIDADE - CELULARES
+   ========================================================= */
+
+@media (max-width: 650px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        flex: none;
+        width: 100%;
+        min-width: 0;
+        min-height: auto;
+        padding: 15px;
+    }
+
+    .sidebar .logo {
+        padding: 5px 10px 15px;
+    }
+
+    .sidebar .menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .sidebar .menu a {
+        padding: 9px 12px;
         font-size: 12px;
-        padding: 12px 5px;
-        text-align: center;
+    }
+
+    .sidebar-footer {
+        margin-top: 15px;
+        padding-top: 12px;
     }
 
     .main-content {
         padding: 15px;
     }
 
-    .cards {
-        grid-template-columns: 1fr;
-    }
-
     .topbar {
+        flex-direction: column;
         align-items: flex-start;
         gap: 15px;
+    }
+
+    .profile {
+        margin-left: 0;
+    }
+
+    .topbar h1 {
+        font-size: 24px;
+    }
+
+    .dashboard-cards,
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .panel {
+        padding: 15px;
+    }
+
+    .panel-header,
+    .section-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-container input {
+        max-width: none;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .filters select,
+    .filters input {
+        width: 100%;
+    }
+
+    table {
+        min-width: 650px;
+    }
+}
+
+/* =========================================================
+   22. ACESSIBILIDADE
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(102, 134, 117, 0.35);
+    outline-offset: 2px;
+}
+
+/* =========================================================
+   23. ANIMAÇÕES E MOVIMENTOS
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
     }
 }

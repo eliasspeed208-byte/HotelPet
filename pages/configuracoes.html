@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotelPet - Configurações</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body data-page="configuracoes">
+
+<div class="container">
+
+    <aside class="sidebar">
+        <a href="../index.html" class="logo">
+            <h2>HotelPet</h2>
+            <span>Gerenciamento</span>
+        </a>
+
+        <nav class="menu">
+            <a href="../index.html">⌂ Painel</a>
+            <a href="reservas.html">▣ Reservas</a>
+            <a href="pets.html">🐾 Pets</a>
+            <a href="usuarios.html">♙ Usuários</a>
+            <a href="configuracoes.html" class="active">⚙ Configurações</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Sistema HotelPet</p>
+            <small>Versão 1.0</small>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Configurações</h1>
+                <p>Personalize seu hotel.</p>
+            </div>
+
+            <div class="profile">
+                <div class="avatar">G</div>
+                <div>
+                    <strong>Gerente</strong>
+                    <small>Administrador</small>
+                </div>
+            </div>
+        </header>
+
+        <section class="panel">
+
+            <h2>Configurações do HotelPet</h2>
+
+            <p class="muted">
+                Personalize as informações, a capacidade e o preço das hospedagens.
+            </p>
+
+            <form id="form-configuracoes" class="form-grid">
+
+                <label>
+                    Nome do hotel
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Nome do seu hotel"
+                        required
+                    >
+                </label>
+
+                <label>
+                    Capacidade total de hospedagem
+                    <input
+                        type="number"
+                        id="capacidade"
+                        name="capacidade"
+                        min="1"
+                        step="1"
+                        placeholder="Ex.: 20"
+                        required
+                    >
+                </label>
+
+                <label>
+                    Valor da diária (R$)
+                    <input
+                        type="number"
+                        id="valor-diaria"
+                        name="valor-diaria"
+                        min="0"
+                        step="0.01"
+                        placeholder="Ex.: 80.00"
+                        required
+                    >
+                </label>
+
+                <div class="form-actions">
+                    <button type="submit" class="button">
+                        Salvar Configurações
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+        <section class="panel">
+            <h2>Informações do sistema</h2>
+
+            <p>Os dados cadastrados ficam salvos neste navegador.</p>
+
+            <p>
+                O valor configurado será utilizado automaticamente
+                no cálculo das novas reservas.
+            </p>
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/app.js"></script>
+
+</body>
+</html>
