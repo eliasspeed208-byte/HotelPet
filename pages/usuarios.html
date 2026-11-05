@@ -12,7 +12,6 @@
 
     <div class="container">
 
-        <!-- MENU LATERAL -->
         <aside class="sidebar">
 
             <div class="logo">
@@ -25,28 +24,23 @@
 
             <nav class="menu">
                 <a href="../index.html">
-                    <span>📊</span>
-                    Dashboard
+                    <span>📊</span> Dashboard
                 </a>
 
                 <a href="reservas.html">
-                    <span>📅</span>
-                    Reservas
+                    <span>📅</span> Reservas
                 </a>
 
                 <a href="pets.html">
-                    <span>🐶</span>
-                    Pets
+                    <span>🐶</span> Pets
                 </a>
 
                 <a href="usuarios.html" class="active">
-                    <span>👥</span>
-                    Usuários
+                    <span>👥</span> Usuários
                 </a>
 
                 <a href="configuracoes.html">
-                    <span>⚙️</span>
-                    Configurações
+                    <span>⚙️</span> Configurações
                 </a>
             </nav>
 
@@ -56,10 +50,10 @@
 
         </aside>
 
-        <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
 
             <header class="topbar">
+
                 <div>
                     <h1>Gerenciar usuários</h1>
                     <p>Cadastre e gerencie os usuários do sistema.</p>
@@ -69,14 +63,14 @@
                     <div class="avatar">G</div>
                     <div>
                         <strong>Gerente</strong>
-                        <span>Administrador</span>
+                        <small>Administrador</small>
                     </div>
                 </div>
+
             </header>
 
             <section class="dashboard">
 
-                <!-- INDICADORES -->
                 <div class="dashboard-cards">
 
                     <div class="card">
@@ -117,10 +111,10 @@
 
                 </div>
 
-                <!-- CADASTRO DE USUÁRIOS -->
                 <section class="panel">
 
                     <div class="panel-header">
+
                         <div>
                             <h2>Usuários cadastrados</h2>
                             <p>Gerencie os dados e os perfis dos usuários.</p>
@@ -132,9 +126,9 @@
                             id="btn-novo-usuario">
                             + Novo usuário
                         </button>
+
                     </div>
 
-                    <!-- FORMULÁRIO -->
                     <form id="form-usuario" class="form-container hidden">
 
                         <input type="hidden" id="id" name="id">
@@ -180,9 +174,8 @@
                         </div>
 
                         <div class="form-actions">
-                            <button
-                                type="submit"
-                                class="btn btn-primary">
+
+                            <button type="submit" class="btn btn-primary">
                                 Salvar usuário
                             </button>
 
@@ -192,23 +185,23 @@
                                 id="btn-cancelar-usuario">
                                 Cancelar
                             </button>
+
                         </div>
 
                     </form>
 
-                    <!-- PESQUISA -->
                     <div class="form-group search-box">
                         <label for="busca-usuarios">Pesquisar usuário</label>
                         <input
                             type="search"
                             id="busca-usuarios"
-                            placeholder="Buscar por nome ou e-mail...">
+                            placeholder="Buscar por nome, e-mail ou perfil...">
                     </div>
 
-                    <!-- TABELA -->
                     <div class="table-container">
 
                         <table>
+
                             <thead>
                                 <tr>
                                     <th>Nome</th>
@@ -221,11 +214,12 @@
 
                             <tbody id="tabela-usuarios">
                                 <tr>
-                                    <td colspan="5">
+                                    <td colspan="5" class="empty">
                                         Nenhum usuário cadastrado.
                                     </td>
                                 </tr>
                             </tbody>
+
                         </table>
 
                     </div>
@@ -242,30 +236,7 @@
 
     </div>
 
-    <!-- JAVASCRIPT -->
-    <script src="../js/app.js"></script>
-
-    <!-- CONTROLE DO FORMULÁRIO -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-
-            const botaoNovo = document.getElementById("btn-novo-usuario");
-            const botaoCancelar = document.getElementById("btn-cancelar-usuario");
-            const formulario = document.getElementById("form-usuario");
-
-            botaoNovo.addEventListener("click", function () {
-                formulario.classList.remove("hidden");
-                formulario.reset();
-                document.getElementById("id").value = "";
-            });
-
-            botaoCancelar.addEventListener("click", function () {
-                formulario.reset();
-                formulario.classList.add("hidden");
-            });
-
-        });
-    </script>
+    <script src="../js/app.js?v=20261104"></script>
 
 </body>
 </html>

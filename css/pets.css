@@ -1,0 +1,345 @@
+
+/* =========================================
+   HOTELPET - PAGINA PETS
+========================================= */
+
+/* CONTEUDO PRINCIPAL */
+
+body[data-page="pets"] main.container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    padding: 30px;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   CABECALHO
+========================================= */
+
+body[data-page="pets"] .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+body[data-page="pets"] .page-header > div {
+    min-width: 0;
+}
+
+body[data-page="pets"] .page-header h2 {
+    margin: 0 0 8px;
+}
+
+body[data-page="pets"] .page-header p {
+    margin: 0;
+}
+
+/* =========================================
+   CARDS
+========================================= */
+
+body[data-page="pets"] .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+body[data-page="pets"] .card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+body[data-page="pets"] .card h3 {
+    margin: 0 0 12px;
+}
+
+body[data-page="pets"] .card p {
+    margin: 0;
+}
+
+/* =========================================
+   FORMULARIO
+========================================= */
+
+body[data-page="pets"] #container-form-pet {
+    display: block;
+    width: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+body[data-page="pets"] #container-form-pet.hidden {
+    display: none;
+}
+
+body[data-page="pets"] #titulo-form-pet {
+    margin: 0 0 20px;
+}
+
+/* CAMPOS */
+
+body[data-page="pets"] #form-pet {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+}
+
+body[data-page="pets"] #form-pet .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+}
+
+body[data-page="pets"] #form-pet label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+body[data-page="pets"] #form-pet input,
+body[data-page="pets"] #form-pet select,
+body[data-page="pets"] #form-pet textarea {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* OBSERVACOES */
+
+body[data-page="pets"] #form-pet textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* BOTOES DO FORMULARIO */
+
+body[data-page="pets"] #form-pet .form-buttons {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+body[data-page="pets"] #form-pet .form-buttons button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* =========================================
+   PESQUISA
+========================================= */
+
+body[data-page="pets"] .search-section {
+    display: block;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body[data-page="pets"] .search-section h3 {
+    margin: 0 0 12px;
+}
+
+/* CAMPO E BOTAO */
+
+body[data-page="pets"] .search-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body[data-page="pets"] .search-box input#busca-pets {
+    display: block;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    padding: 10px 14px;
+    box-sizing: border-box;
+}
+
+body[data-page="pets"] .search-box button#btn-buscar-pet {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-width: 110px;
+    height: 44px;
+    padding: 10px 20px;
+    background-color: #287a63;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    visibility: visible;
+    opacity: 1;
+    box-sizing: border-box;
+}
+
+body[data-page="pets"] .search-box button#btn-buscar-pet:hover {
+    background-color: #1d604d;
+}
+
+/* =========================================
+   TABELA DE PETS
+========================================= */
+
+body[data-page="pets"] .table-section {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+body[data-page="pets"] .table-section h3 {
+    margin: 0 0 12px;
+}
+
+/* AREA DE ROLAGEM */
+
+body[data-page="pets"] .table-responsive {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
+}
+
+/* TABELA */
+
+body[data-page="pets"] #tabela-pets {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    box-sizing: border-box;
+}
+
+/* CABECALHO */
+
+body[data-page="pets"] #tabela-pets thead {
+    display: table-header-group;
+    visibility: visible;
+}
+
+body[data-page="pets"] #tabela-pets thead tr {
+    display: table-row;
+}
+
+body[data-page="pets"] #tabela-pets th {
+    display: table-cell;
+    padding: 14px;
+    text-align: left;
+    background-color: #287a63;
+    color: #ffffff;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* LINHAS */
+
+body[data-page="pets"] #tabela-pets tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+body[data-page="pets"] #tabela-pets td {
+    padding: 14px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* =========================================
+   BOTOES DA TABELA
+========================================= */
+
+body[data-page="pets"] #tabela-pets button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+/* =========================================
+   RODAPE
+========================================= */
+
+body[data-page="pets"] .footer {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 900px) {
+
+    body[data-page="pets"] main.container {
+        padding: 20px;
+    }
+
+    body[data-page="pets"] .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    body[data-page="pets"] main.container {
+        padding: 16px;
+    }
+
+    body[data-page="pets"] .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    body[data-page="pets"] .cards {
+        grid-template-columns: 1fr;
+    }
+
+    body[data-page="pets"] #form-pet {
+        grid-template-columns: 1fr;
+    }
+
+    body[data-page="pets"] .search-box {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    body[data-page="pets"] .search-box input#busca-pets {
+        width: 100%;
+    }
+
+    body[data-page="pets"] .search-box button#btn-buscar-pet {
+        width: 100%;
+    }
+
+}

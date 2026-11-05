@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Reservas - HotelPet</title>
 
     <link rel="stylesheet" href="../css/style.css">
@@ -19,6 +20,7 @@
 
             <div class="logo">
                 <span>🐾</span>
+
                 <div>
                     <h2>HotelPet</h2>
                     <p>Gerenciamento</p>
@@ -68,16 +70,22 @@
 
                 <div>
                     <h1>Gerenciar reservas</h1>
-                    <p>Cadastre e acompanhe as hospedagens dos pets.</p>
+
+                    <p>
+                        Cadastre e acompanhe as hospedagens dos pets.
+                    </p>
                 </div>
 
+                <!-- GERENTE CADASTRADO -->
                 <div class="profile">
+
                     <div class="avatar">G</div>
 
                     <div>
                         <strong>Gerente</strong>
                         <span>Administrador</span>
                     </div>
+
                 </div>
 
             </header>
@@ -88,68 +96,103 @@
                 <div class="dashboard-cards">
 
                     <div class="card">
+
                         <div class="card-header">
-                            <span class="card-title">Total de reservas</span>
+                            <span class="card-title">
+                                Total de reservas
+                            </span>
+
                             <div class="card-icon">📅</div>
                         </div>
 
-                        <strong class="card-value" id="total-reservas">0</strong>
+                        <strong class="card-value" id="total-reservas">
+                            0
+                        </strong>
 
                         <p class="card-description">
                             Reservas cadastradas
                         </p>
+
                     </div>
 
                     <div class="card">
+
                         <div class="card-header">
-                            <span class="card-title">Confirmadas</span>
+                            <span class="card-title">
+                                Confirmadas
+                            </span>
+
                             <div class="card-icon">✅</div>
                         </div>
 
-                        <strong class="card-value" id="total-confirmadas">0</strong>
+                        <strong class="card-value" id="total-confirmadas">
+                            0
+                        </strong>
 
                         <p class="card-description">
                             Reservas confirmadas
                         </p>
+
                     </div>
 
                     <div class="card">
+
                         <div class="card-header">
-                            <span class="card-title">Em andamento</span>
+                            <span class="card-title">
+                                Em andamento
+                            </span>
+
                             <div class="card-icon">🐾</div>
                         </div>
 
-                        <strong class="card-value" id="total-andamento">0</strong>
+                        <strong class="card-value" id="total-andamento">
+                            0
+                        </strong>
 
                         <p class="card-description">
                             Pets hospedados
                         </p>
+
                     </div>
 
                     <div class="card">
+
                         <div class="card-header">
-                            <span class="card-title">Finalizadas</span>
+                            <span class="card-title">
+                                Finalizadas
+                            </span>
+
                             <div class="card-icon">🏁</div>
                         </div>
 
-                        <strong class="card-value" id="total-finalizadas">0</strong>
+                        <strong class="card-value" id="total-finalizadas">
+                            0
+                        </strong>
 
                         <p class="card-description">
                             Hospedagens concluídas
                         </p>
+
                     </div>
 
                     <div class="card">
+
                         <div class="card-header">
-                            <span class="card-title">Canceladas</span>
+                            <span class="card-title">
+                                Canceladas
+                            </span>
+
                             <div class="card-icon">❌</div>
                         </div>
 
-                        <strong class="card-value" id="total-canceladas">0</strong>
+                        <strong class="card-value" id="total-canceladas">
+                            0
+                        </strong>
 
                         <p class="card-description">
                             Reservas canceladas
                         </p>
+
                     </div>
 
                 </div>
@@ -161,25 +204,44 @@
 
                         <div>
                             <h2>Reservas cadastradas</h2>
-                            <p>Gerencie todas as hospedagens do HotelPet.</p>
+
+                            <p>
+                                Gerencie todas as hospedagens do HotelPet.
+                            </p>
                         </div>
 
                         <button
                             type="button"
                             class="btn btn-primary"
                             id="btn-novo">
+
                             + Nova reserva
+
                         </button>
 
                     </div>
 
-                    <!-- FORMULÁRIO DE CADASTRO -->
-                    <form id="cadastro-form" class="form-container hidden">
+                    <!-- FORMULÁRIO -->
+                    <form
+                        id="cadastro-form"
+                        class="form-container hidden">
 
-                        <input type="hidden" id="id" name="id">
+                        <input
+                            type="hidden"
+                            id="id"
+                            name="id">
+
+                        <!-- GERENTE RESPONSÁVEL -->
+                        <input
+                            type="hidden"
+                            id="gerenteId"
+                            name="gerenteId">
 
                         <div class="form-group">
-                            <label for="pet">Nome do pet</label>
+
+                            <label for="pet">
+                                Nome do pet
+                            </label>
 
                             <input
                                 type="text"
@@ -187,10 +249,14 @@
                                 name="pet"
                                 placeholder="Digite o nome do pet"
                                 required>
+
                         </div>
 
                         <div class="form-group">
-                            <label for="tutor">Nome do tutor</label>
+
+                            <label for="tutor">
+                                Nome do tutor
+                            </label>
 
                             <input
                                 type="text"
@@ -198,10 +264,14 @@
                                 name="tutor"
                                 placeholder="Digite o nome do tutor"
                                 required>
+
                         </div>
 
                         <div class="form-group">
-                            <label for="telefone">Telefone do tutor</label>
+
+                            <label for="telefone">
+                                Telefone do tutor
+                            </label>
 
                             <input
                                 type="tel"
@@ -209,41 +279,73 @@
                                 name="telefone"
                                 placeholder="(00) 00000-0000"
                                 required>
+
                         </div>
 
                         <div class="form-group">
-                            <label for="tipo">Tipo de hospedagem</label>
 
-                            <select id="tipo" name="tipo" required>
-                                <option value="">Selecione</option>
-                                <option value="Diária">Diária</option>
-                                <option value="Semanal">Semanal</option>
-                                <option value="Mensal">Mensal</option>
+                            <label for="tipo">
+                                Tipo de hospedagem
+                            </label>
+
+                            <select
+                                id="tipo"
+                                name="tipo"
+                                required>
+
+                                <option value="">
+                                    Selecione
+                                </option>
+
+                                <option value="Diária">
+                                    Diária
+                                </option>
+
+                                <option value="Semanal">
+                                    Semanal
+                                </option>
+
+                                <option value="Mensal">
+                                    Mensal
+                                </option>
+
                             </select>
+
                         </div>
 
                         <div class="form-group">
-                            <label for="entrada">Data de entrada</label>
+
+                            <label for="entrada">
+                                Data de entrada
+                            </label>
 
                             <input
                                 type="date"
                                 id="entrada"
                                 name="entrada"
                                 required>
+
                         </div>
 
                         <div class="form-group">
-                            <label for="saida">Data de saída</label>
+
+                            <label for="saida">
+                                Data de saída
+                            </label>
 
                             <input
                                 type="date"
                                 id="saida"
                                 name="saida"
                                 required>
+
                         </div>
 
-                        <div class="form-group">
-                            <label for="valor">Valor da reserva (R$)</label>
+        <div class="form-group">
+
+                            <label for="valor">
+                                Valor da reserva (R$)
+                            </label>
 
                             <input
                                 type="number"
@@ -253,28 +355,56 @@
                                 min="0"
                                 step="0.01"
                                 required>
+
                         </div>
 
                         <div class="form-group">
-                            <label for="status">Status da reserva</label>
 
-                            <select id="status" name="status" required>
-                                <option value="Pendente">Pendente</option>
-                                <option value="Confirmada">Confirmada</option>
-                                <option value="Em andamento">Em andamento</option>
-                                <option value="Finalizada">Finalizada</option>
-                                <option value="Cancelada">Cancelada</option>
+                            <label for="status">
+                                Status da reserva
+                            </label>
+
+                            <select
+                                id="status"
+                                name="status"
+                                required>
+
+                                <option value="Pendente">
+                                    Pendente
+                                </option>
+
+                                <option value="Confirmada">
+                                    Confirmada
+                                </option>
+
+                                <option value="Em andamento">
+                                    Em andamento
+                                </option>
+
+                                <option value="Finalizada">
+                                    Finalizada
+                                </option>
+
+                                <option value="Cancelada">
+                                    Cancelada
+                                </option>
+
                             </select>
+
                         </div>
 
                         <div class="form-group">
-                            <label for="observacoes">Observações</label>
+
+                            <label for="observacoes">
+                                Observações
+                            </label>
 
                             <textarea
                                 id="observacoes"
                                 name="observacoes"
                                 rows="3"
                                 placeholder="Informações adicionais sobre a hospedagem..."></textarea>
+
                         </div>
 
                         <div class="form-actions">
@@ -282,14 +412,18 @@
                             <button
                                 type="submit"
                                 class="btn btn-primary">
+
                                 Salvar reserva
+
                             </button>
 
                             <button
                                 type="button"
                                 class="btn btn-secondary"
                                 id="btn-cancelar">
+
                                 Cancelar
+
                             </button>
 
                         </div>
@@ -306,16 +440,17 @@
                         <input
                             type="search"
                             id="busca-reservas"
-                            placeholder="Buscar por nome do pet ou tutor...">
+                            placeholder="Buscar por pet, tutor ou gerente...">
 
                     </div>
 
-                    <!-- TABELA DE RESERVAS -->
+                    <!-- TABELA -->
                     <div class="table-container">
 
                         <table>
 
                             <thead>
+
                                 <tr>
                                     <th>Pet</th>
                                     <th>Tutor</th>
@@ -324,14 +459,16 @@
                                     <th>Saída</th>
                                     <th>Valor</th>
                                     <th>Status</th>
+                                    <th>Gerente responsável</th>
                                     <th>Ações</th>
                                 </tr>
+
                             </thead>
 
                             <tbody id="registros-tbody">
 
                                 <tr>
-                                    <td colspan="8">
+                                    <td colspan="9">
                                         Nenhuma reserva cadastrada.
                                     </td>
                                 </tr>
@@ -348,9 +485,11 @@
 
             <!-- RODAPÉ -->
             <footer class="footer">
+
                 <p>
                     HotelPet - Sistema de Gerenciamento de Hotel para Pets
                 </p>
+
             </footer>
 
         </main>

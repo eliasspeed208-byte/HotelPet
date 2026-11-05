@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - HotelPet</title>
-
     <style>
         * {
             margin: 0;
@@ -62,11 +61,6 @@
             font-size: 15px;
         }
 
-        input:focus {
-            outline: none;
-            border-color: #267562;
-        }
-
         button {
             width: 100%;
             padding: 14px;
@@ -100,69 +94,123 @@
 </head>
 
 <body>
-
     <div class="login-container">
-
         <h1>HotelPet</h1>
         <p class="subtitulo">Entre para acessar o sistema</p>
 
         <form id="form-login">
-
             <div class="campo">
                 <label for="email">E-mail</label>
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Digite seu e-mail"
-                    required
-                >
+                <input type="email" id="email"
+                    placeholder="Digite seu e-mail" required>
             </div>
 
             <div class="campo">
                 <label for="senha">Senha</label>
-                <input
-                    type="password"
-                    id="senha"
-                    placeholder="Digite sua senha"
-                    required
-                >
+                <input type="password" id="senha"
+                    placeholder="Digite sua senha" required>
             </div>
 
             <button type="submit">Entrar</button>
-
-            <div id="mensagem"></div>
-
+            <div id="mensagem" role="alert"></div>
         </form>
 
         <div class="rodape">
             Sistema de Gerenciamento HotelPet
         </div>
-
     </div>
 
     <script>
-        if (sessionStorage.getItem("hotelpet_logado") === "sim") {
+        const CHAVE_USUARIOS = "hotelpet_usuarios";
+        const CHAVE_SESSAO = "hotelpet_usuario_logado";
+
+        function carregarUsuarios() {
+            try {
+                const dados = JSON.parse(
+                    localStorage.getItem(CHAVE_USUARIOS) || "[]"
+                );
+
+                return Array.isArray(dados) ? dados : [];
+            } catch {
+                return [];
+            }
+        }
+
+        function salvarUsuarios(usuarios) {
+            localStorage.setItem(
+                CHAVE_USUARIOS,
+                JSON.stringify(usuarios)
+            );
+        }
+
+        function normalizar(texto) {
+            return String(texto || "")
+                .trim()
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
+        }
+
+        if (sessionStorage.getItem(CHAVE_SESSAO)) {
             window.location.href = "index.html";
         }
 
-        document.getElementById("form-login").addEventListener("submit", function(event) {
-            event.preventDefault();
+        document.getElementById("form-login").addEventListener(
+            "submit",
+            function(event) {
+                event.preventDefault();
 
-            const email = document.getElementById("email").value.trim();
-            const senha = document.getElementById("senha").value;
-            const mensagem = document.getElementById("mensagem");
+                const email = document.getElementById("email").value.trim();
+                const senha = document.getElementById("senha").value;
+                const mensagem = document.getElementById("mensagem");
 
-            if (
-                email === "admin@hotelpet.com" &&
-                senha === "123456"
-            ) {
-                sessionStorage.setItem("hotelpet_logado", "sim");
+                let usuarios = carregarUsuarios();
+
+                if (!usuarios.length) {
+                    mensagem.textContent =
+                        "Nenhum usuário cadastrado. Cadastre o primeiro usuário.";
+                    return;
+                }
+
+                // Senha inicial para usuários antigos que ainda não tinham senha.
+                let houveMigracao = false;
+
+                usuarios = usuarios.map(usuario => {
+                    if (!usuario.senha) {
+                        usuario.senha = "123456";
+                        houveMigracao = true;
+                    }
+
+                    return usuario;
+                });
+
+                if (houveMigracao) {
+                    salvarUsuarios(usuarios);
+                }
+
+                const usuario = usuarios.find(item =>
+                    normalizar(item.email) === normalizar(email) &&
+                    item.senha === senha
+                );
+
+                if (!usuario) {
+                    mensagem.textContent = "E-mail ou senha incorretos!";
+                    return;
+                }
+
+                sessionStorage.setItem(
+                    CHAVE_SESSAO,
+                    JSON.stringify({
+                        id: usuario.id,
+                        nome: usuario.nome,
+                        email: usuario.email,
+                        tipo: usuario.tipo || usuario.perfil || "Cliente"
+                    })
+                );
+
                 window.location.href = "index.html";
-            } else {
-                mensagem.textContent = "E-mail ou senha incorretos!";
             }
-        });
+        );
     </script>
-
 </body>
 </html>

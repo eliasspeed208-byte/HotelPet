@@ -1,14 +1,13 @@
+/* =========================================================
+   HOTELPET — JAVASCRIPT PRINCIPAL
+   Painel | Pets | Usuários | Reservas | Configurações
+   Dados preservados no localStorage.
+   ========================================================= */
 
-/* =====================================================
-   HOTELPET - JAVASCRIPT PRINCIPAL
-   Sistema feito com HTML, CSS e JavaScript puro.
-   Os dados ficam salvos no localStorage do navegador.
-   ===================================================== */
 
-
-/* =====================================================
+/* =========================================================
    1. CHAVES E FUNÇÕES GERAIS
-   ===================================================== */
+   ========================================================= */
 
 const CHAVES = {
     pets: "hotelpet_pets",
@@ -44,7 +43,9 @@ function definirTexto(id, texto) {
 function carregar(chave) {
     try {
         const dados = localStorage.getItem(chave);
-        return dados ? JSON.parse(dados) : [];
+        const resultado = dados ? JSON.parse(dados) : [];
+
+        return Array.isArray(resultado) ? resultado : [];
     } catch (erro) {
         console.error("Erro ao carregar dados:", erro);
         return [];
@@ -54,29 +55,30 @@ function carregar(chave) {
 function salvar(chave, dados) {
     try {
         localStorage.setItem(chave, JSON.stringify(dados));
+        return true;
     } catch (erro) {
         console.error("Erro ao salvar dados:", erro);
         alert("Não foi possível salvar os dados neste navegador.");
+        return false;
     }
 }
 
 function carregarConfiguracoes() {
+    const padrao = {
+        nome: "Hotel Pet",
+        capacidade: 20,
+        diaria: 80
+    };
+
     try {
         const dados = localStorage.getItem(CHAVES.configuracoes);
 
         return dados
-            ? JSON.parse(dados)
-            : {
-                nome: "Hotel Pet",
-                capacidade: 20,
-                diaria: 80
-            };
+            ? { ...padrao, ...JSON.parse(dados) }
+            : padrao;
     } catch (erro) {
-        return {
-            nome: "Hotel Pet",
-            capacidade: 20,
-            diaria: 80
-        };
+        console.error("Erro ao carregar configurações:", erro);
+        return padrao;
     }
 }
 
@@ -86,9 +88,12 @@ function salvarConfiguracoes(dados) {
             CHAVES.configuracoes,
             JSON.stringify(dados)
         );
+
+        return true;
     } catch (erro) {
         console.error("Erro ao salvar configurações:", erro);
         alert("Não foi possível salvar as configurações.");
+        return false;
     }
 }
 
@@ -111,12 +116,22 @@ function escapar(texto) {
     });
 }
 
+function normalizar(texto) {
+    return String(texto ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
+
 function limparFormulario(formulario) {
     if (!formulario) return;
 
     formulario.reset();
 
-    const campoId = formulario.querySelector('input[type="hidden"]');
+    const campoId = formulario.querySelector(
+        'input[type="hidden"][name="id"], input[type="hidden"]#id'
+    );
 
     if (campoId) {
         campoId.value = "";
@@ -133,50 +148,37 @@ function formatarMoeda(numero) {
 function formatarData(data) {
     if (!data) return "-";
 
-    const partes = data.split("-");
+    const partes = String(data).split("-");
 
     if (partes.length !== 3) return data;
 
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
 
-function atualizarPainel() {
-    const reservas = carregar(CHAVES.reservas);
-    const pets = carregar(CHAVES.pets);
-    const usuarios = carregar(CHAVES.usuarios);
-    const configuracoes = carregarConfiguracoes();
+function obterCorpoTabela(idTabela) {
+    const tabela = elemento(idTabela);
 
-    const capacidade = Number(configuracoes.capacidade) || 0;
+    if (!tabela) return null;
 
-    // Considera ocupadas as vagas das reservas em andamento.
-    const ocupadas = reservas.filter(
-        reserva => reserva.status === "Em andamento"
-    ).length;
+    return tabela.tagName === "TBODY"
+        ? tabela
+        : tabela.querySelector("tbody");
+}
 
-    const vagas = Math.max(0, capacidade - ocupadas);
+function mostrarFormulario(formulario, visivel) {
+    if (!formulario) return;
 
-    definirTexto("total-reservas", reservas.length);
-    definirTexto("total-pets", pets.length);
-    definirTexto("total-usuarios", usuarios.length);
-    definirTexto("total-vagas", vagas);
+    formulario.classList.toggle("hidden", !visivel);
+}
 
-    definirTexto(
-        "capacidade-hotel",
-        `Capacidade total: ${capacidade}`
-    );
-
-    definirTexto(
-        "nome-hotel-painel",
-        configuracoes.nome || "Hotel Pet"
-    );
-
-    listarReservasRecentes();
+function pesquisarTexto(texto, termo) {
+    return normalizar(texto).includes(normalizar(termo));
 }
 
 
-/* =====================================================
+/* =========================================================
    2. PAINEL PRINCIPAL
-   ===================================================== */
+   ========================================================= */
 
 function listarReservasRecentes() {
     const tabela = elemento("tabela-reservas");
@@ -186,7 +188,9 @@ function listarReservasRecentes() {
     const reservas = carregar(CHAVES.reservas);
 
     const recentes = [...reservas]
-        .sort((a, b) => Number(b.criadoEm || 0) - Number(a.criadoEm || 0))
+        .sort((a, b) =>
+            Number(b.criadoEm || 0) - Number(a.criadoEm || 0)
+        )
         .slice(0, 5);
 
     if (recentes.length === 0) {
@@ -213,30 +217,112 @@ function listarReservasRecentes() {
     `).join("");
 }
 
+function atualizarPainel() {
+    const reservas = carregar(CHAVES.reservas);
+    const pets = carregar(CHAVES.pets);
+    const usuarios = carregar(CHAVES.usuarios);
+    const configuracoes = carregarConfiguracoes();
 
-/* =====================================================
+    const capacidade = Math.max(
+        0,
+        Number(configuracoes.capacidade) || 0
+    );
+
+    const ocupadas = reservas.filter(
+        reserva => normalizar(reserva.status) === "em andamento"
+    ).length;
+
+    const vagas = Math.max(0, capacidade - ocupadas);
+
+    definirTexto("total-reservas", reservas.length);
+    definirTexto("total-pets", pets.length);
+    definirTexto("total-usuarios", usuarios.length);
+    definirTexto("total-vagas", vagas);
+
+    definirTexto(
+        "capacidade-hotel",
+        `Capacidade total: ${capacidade}`
+    );
+
+    definirTexto(
+        "nome-hotel-painel",
+        configuracoes.nome || "Hotel Pet"
+    );
+
+    listarReservasRecentes();
+}
+
+
+/* =========================================================
    3. PETS
-   ===================================================== */
+   ========================================================= */
 
 function iniciarPets() {
     const form = elemento("form-pet");
-    const tabela = elemento("tabela-pets");
+    const tabela = obterCorpoTabela("tabela-pets");
+    const container = elemento("container-form-pet") || form;
+    const botaoNovo = elemento("btn-novo-pet");
+    const botaoCancelar = elemento("btn-cancelar-pet");
+    const campoBusca = elemento("busca-pets");
+    const titulo = elemento("titulo-form-pet");
 
     if (!form || !tabela) return;
 
-    function listarPets() {
+    function abrirFormulario(pet = null) {
+        limparFormulario(form);
+
+        if (pet) {
+            Object.entries(pet).forEach(([chave, valorCampo]) => {
+                definirValor(chave, valorCampo);
+            });
+
+            if (titulo) {
+                titulo.textContent = "Editar Pet";
+            }
+        } else if (titulo) {
+            titulo.textContent = "Cadastrar Novo Pet";
+        }
+
+        container.classList.remove("hidden");
+
+        (container || form).scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+    function fecharFormulario() {
+        limparFormulario(form);
+
+        container.classList.add("hidden");
+
+        if (titulo) {
+            titulo.textContent = "Cadastrar Novo Pet";
+        }
+    }
+
+    function listarPets(filtro = "") {
         const pets = carregar(CHAVES.pets);
 
-        if (pets.length === 0) {
+        const filtrados = pets.filter(pet =>
+            pesquisarTexto(pet.nome, filtro) ||
+            pesquisarTexto(pet.tutor, filtro) ||
+            pesquisarTexto(pet.especie, filtro) ||
+            pesquisarTexto(pet.raca, filtro)
+        );
+
+        if (filtrados.length === 0) {
             tabela.innerHTML = `
                 <tr>
                     <td colspan="9" class="empty">
-                        Nenhum pet cadastrado.
+                        ${filtro
+                            ? "Nenhum pet encontrado."
+                            : "Nenhum pet cadastrado."}
                     </td>
                 </tr>
             `;
         } else {
-            tabela.innerHTML = pets.map(pet => `
+            tabela.innerHTML = filtrados.map(pet => `
                 <tr>
                     <td>${escapar(pet.nome)}</td>
                     <td>${escapar(pet.especie)}</td>
@@ -248,11 +334,13 @@ function iniciarPets() {
                     <td>${escapar(pet.telefone || "-")}</td>
                     <td>
                         <button type="button"
+                            class="btn-secondary"
                             data-editar-pet="${escapar(pet.id)}">
                             Editar
                         </button>
 
                         <button type="button"
+                            class="btn-danger"
                             data-excluir-pet="${escapar(pet.id)}">
                             Excluir
                         </button>
@@ -265,16 +353,30 @@ function iniciarPets() {
 
         definirTexto(
             "total-cachorros",
-            pets.filter(pet => pet.especie === "Cachorro").length
+            pets.filter(pet =>
+                normalizar(pet.especie) === "cachorro"
+            ).length
         );
 
         definirTexto(
             "total-gatos",
-            pets.filter(pet => pet.especie === "Gato").length
+            pets.filter(pet =>
+                normalizar(pet.especie) === "gato"
+            ).length
         );
 
         atualizarPainel();
     }
+
+    botaoNovo?.addEventListener("click", () => {
+        abrirFormulario();
+    });
+
+    botaoCancelar?.addEventListener("click", fecharFormulario);
+
+    campoBusca?.addEventListener("input", () => {
+        listarPets(campoBusca.value);
+    });
 
     form.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -308,12 +410,10 @@ function iniciarPets() {
             pets.push(pet);
         }
 
-        salvar(CHAVES.pets, pets);
+        if (!salvar(CHAVES.pets, pets)) return;
 
-        limparFormulario(form);
-        form.classList.add("hidden");
-
-        listarPets();
+        fecharFormulario();
+        listarPets(campoBusca?.value || "");
 
         alert("Pet salvo com sucesso!");
     });
@@ -327,14 +427,7 @@ function iniciarPets() {
                 item => item.id === editar.dataset.editarPet
             );
 
-            if (!pet) return;
-
-            Object.keys(pet).forEach(chave => {
-                definirValor(chave, pet[chave]);
-            });
-
-            form.classList.remove("hidden");
-            form.scrollIntoView({ behavior: "smooth", block: "start" });
+            if (pet) abrirFormulario(pet);
         }
 
         if (excluir) {
@@ -344,43 +437,83 @@ function iniciarPets() {
                 item => item.id !== excluir.dataset.excluirPet
             );
 
-            salvar(CHAVES.pets, petsAtualizados);
-            listarPets();
+            if (!salvar(CHAVES.pets, petsAtualizados)) return;
+
+            listarPets(campoBusca?.value || "");
 
             alert("Pet excluído com sucesso!");
         }
     });
 
-    // Os botões de abrir e cancelar já são controlados
-    // pelo pequeno script que está no pets.html.
-
     listarPets();
 }
 
 
-/* =====================================================
+/* =========================================================
    4. USUÁRIOS
-   ===================================================== */
+   ========================================================= */
+
 
 function iniciarUsuarios() {
     const form = elemento("form-usuario");
-    const tabela = elemento("tabela-usuarios");
+    const botaoNovo = elemento("btn-novo-usuario");
+    const botaoCancelar = elemento("btn-cancelar-usuario");
+    const tabela = obterCorpoTabela("tabela-usuarios");
+    const campoBusca = elemento("busca-usuarios");
 
-    if (!form || !tabela) return;
+    if (!form || !tabela) {
+        console.error("Elementos do formulário de usuários não encontrados.");
+        return;
+    }
 
-    function listarUsuarios() {
+    function abrirFormulario(usuario = null) {
+        limparFormulario(form);
+
+        if (usuario) {
+            Object.entries(usuario).forEach(([chave, valorCampo]) => {
+                definirValor(chave, valorCampo);
+            });
+        }
+
+        form.hidden = false;
+        form.classList.remove("hidden");
+        form.style.display = "grid";
+
+        form.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+    function fecharFormulario() {
+        limparFormulario(form);
+        form.classList.add("hidden");
+        form.hidden = true;
+        form.style.display = "none";
+    }
+
+    function listarUsuarios(filtro = "") {
         const usuarios = carregar(CHAVES.usuarios);
 
-        if (usuarios.length === 0) {
+        const filtrados = usuarios.filter(usuario =>
+            pesquisarTexto(usuario.nome, filtro) ||
+            pesquisarTexto(usuario.email, filtro) ||
+            pesquisarTexto(usuario.telefone, filtro) ||
+            pesquisarTexto(usuario.tipo, filtro)
+        );
+
+        if (filtrados.length === 0) {
             tabela.innerHTML = `
                 <tr>
                     <td colspan="5" class="empty">
-                        Nenhum usuário cadastrado.
+                        ${filtro
+                            ? "Nenhum usuário encontrado."
+                            : "Nenhum usuário cadastrado."}
                     </td>
                 </tr>
             `;
         } else {
-            tabela.innerHTML = usuarios.map(usuario => `
+            tabela.innerHTML = filtrados.map(usuario => `
                 <tr>
                     <td>${escapar(usuario.nome)}</td>
                     <td>${escapar(usuario.email)}</td>
@@ -388,11 +521,12 @@ function iniciarUsuarios() {
                     <td>${escapar(usuario.tipo)}</td>
                     <td>
                         <button type="button"
+                            class="btn-secondary"
                             data-editar-usuario="${escapar(usuario.id)}">
                             Editar
                         </button>
-
                         <button type="button"
+                            class="btn-danger"
                             data-excluir-usuario="${escapar(usuario.id)}">
                             Excluir
                         </button>
@@ -401,8 +535,33 @@ function iniciarUsuarios() {
             `).join("");
         }
 
+        definirTexto("total-usuarios", usuarios.length);
+        definirTexto("total-gerentes", usuarios.filter(u =>
+            normalizar(u.tipo) === "gerente"
+        ).length);
+        definirTexto("total-funcionarios", usuarios.filter(u =>
+            normalizar(u.tipo).includes("funcionario")
+        ).length);
+        definirTexto("total-clientes", usuarios.filter(u =>
+            normalizar(u.tipo) === "cliente"
+        ).length);
+
         atualizarPainel();
     }
+
+    botaoNovo?.addEventListener("click", function(event) {
+        event.preventDefault();
+        abrirFormulario();
+    });
+
+    botaoCancelar?.addEventListener("click", function(event) {
+        event.preventDefault();
+        fecharFormulario();
+    });
+
+    campoBusca?.addEventListener("input", function() {
+        listarUsuarios(campoBusca.value);
+    });
 
     form.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -424,7 +583,7 @@ function iniciarUsuarios() {
         }
 
         const emailExiste = usuarios.some(item =>
-            item.email.toLowerCase() === usuario.email.toLowerCase() &&
+            normalizar(item.email) === normalizar(usuario.email) &&
             item.id !== id
         );
 
@@ -441,13 +600,10 @@ function iniciarUsuarios() {
             usuarios.push(usuario);
         }
 
-        salvar(CHAVES.usuarios, usuarios);
+        if (!salvar(CHAVES.usuarios, usuarios)) return;
 
-        limparFormulario(form);
-        form.classList.add("hidden");
-
-        listarUsuarios();
-
+        fecharFormulario();
+        listarUsuarios(campoBusca?.value || "");
         alert("Usuário salvo com sucesso!");
     });
 
@@ -460,40 +616,26 @@ function iniciarUsuarios() {
                 item => item.id === editar.dataset.editarUsuario
             );
 
-            if (!usuario) return;
-
-            Object.keys(usuario).forEach(chave => {
-                definirValor(chave, usuario[chave]);
-            });
-
-            form.classList.remove("hidden");
-            form.scrollIntoView({ behavior: "smooth", block: "start" });
+            if (usuario) abrirFormulario(usuario);
         }
 
         if (excluir) {
             if (!confirm("Deseja excluir este usuário?")) return;
 
-            const usuariosAtualizados = carregar(CHAVES.usuarios).filter(
+            const atualizados = carregar(CHAVES.usuarios).filter(
                 item => item.id !== excluir.dataset.excluirUsuario
             );
 
-            salvar(CHAVES.usuarios, usuariosAtualizados);
-            listarUsuarios();
+            if (!salvar(CHAVES.usuarios, atualizados)) return;
 
+            listarUsuarios(campoBusca?.value || "");
             alert("Usuário excluído com sucesso!");
         }
     });
 
-    // Os botões de abrir e cancelar já são controlados
-    // pelo pequeno script que está no usuarios.html.
-
     listarUsuarios();
 }
 
-
-/* =====================================================
-   5. RESERVAS
-   ===================================================== */
 
 function iniciarReservas() {
     const form = elemento("cadastro-form");
@@ -506,20 +648,55 @@ function iniciarReservas() {
     const campoBusca = elemento("busca-reservas");
     const estadoVazio = document.querySelector(".empty-state");
 
+    function abrirFormulario(reserva = null) {
+        limparFormulario(form);
+
+        if (reserva) {
+            Object.entries(reserva).forEach(([chave, valorCampo]) => {
+                definirValor(chave, valorCampo);
+            });
+        } else {
+            definirValor("status", "Pendente");
+        }
+
+        mostrarFormulario(form, true);
+
+        form.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+    function fecharFormulario() {
+        limparFormulario(form);
+        mostrarFormulario(form, false);
+    }
+
+    function nomeGerente(reserva) {
+        if (!reserva.gerenteId) return "-";
+
+        const gerente = carregar(CHAVES.usuarios).find(usuario =>
+            usuario.id === reserva.gerenteId
+        );
+
+        return gerente?.nome || reserva.gerenteId;
+    }
+
     function listarReservas(filtro = "") {
         const reservas = carregar(CHAVES.reservas);
-
-        const termo = filtro.toLowerCase();
+        const termo = normalizar(filtro);
 
         const filtradas = reservas.filter(reserva =>
-            String(reserva.pet || "").toLowerCase().includes(termo) ||
-            String(reserva.tutor || "").toLowerCase().includes(termo)
+            pesquisarTexto(reserva.pet, termo) ||
+            pesquisarTexto(reserva.tutor, termo) ||
+            pesquisarTexto(reserva.telefone, termo) ||
+            pesquisarTexto(reserva.status, termo)
         );
 
         if (filtradas.length === 0) {
             tabela.innerHTML = `
                 <tr>
-                    <td colspan="7" class="empty">
+                    <td colspan="9" class="empty">
                         ${termo
                             ? "Nenhuma reserva encontrada."
                             : "Nenhuma reserva cadastrada."}
@@ -531,17 +708,21 @@ function iniciarReservas() {
                 <tr>
                     <td>${escapar(reserva.pet)}</td>
                     <td>${escapar(reserva.tutor)}</td>
+                    <td>${escapar(reserva.telefone || "-")}</td>
                     <td>${formatarData(reserva.entrada)}</td>
                     <td>${formatarData(reserva.saida)}</td>
                     <td>${formatarMoeda(reserva.valor)}</td>
                     <td>${escapar(reserva.status)}</td>
+                    <td>${escapar(nomeGerente(reserva))}</td>
                     <td>
                         <button type="button"
+                            class="btn-secondary"
                             data-editar-reserva="${escapar(reserva.id)}">
                             Editar
                         </button>
 
                         <button type="button"
+                            class="btn-danger"
                             data-excluir-reserva="${escapar(reserva.id)}">
                             Excluir
                         </button>
@@ -559,53 +740,44 @@ function iniciarReservas() {
 
         definirTexto(
             "total-confirmadas",
-            reservas.filter(item => item.status === "Confirmada").length
+            reservas.filter(item =>
+                normalizar(item.status) === "confirmada"
+            ).length
         );
 
         definirTexto(
             "total-andamento",
-            reservas.filter(item => item.status === "Em andamento").length
+            reservas.filter(item =>
+                normalizar(item.status) === "em andamento"
+            ).length
+        );
+
+        definirTexto(
+            "total-finalizadas",
+            reservas.filter(item =>
+                normalizar(item.status) === "finalizada"
+            ).length
         );
 
         definirTexto(
             "total-canceladas",
-            reservas.filter(item => item.status === "Cancelada").length
+            reservas.filter(item =>
+                normalizar(item.status) === "cancelada"
+            ).length
         );
 
         atualizarPainel();
     }
 
-    function abrirFormulario() {
-        limparFormulario(form);
+    botaoNovo?.addEventListener("click", () => {
+        abrirFormulario();
+    });
 
-        definirValor("status", "Pendente");
+    botaoCancelar?.addEventListener("click", fecharFormulario);
 
-        form.classList.remove("hidden");
-
-        form.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-    }
-
-    function fecharFormulario() {
-        limparFormulario(form);
-        form.classList.add("hidden");
-    }
-
-    if (botaoNovo) {
-        botaoNovo.addEventListener("click", abrirFormulario);
-    }
-
-    if (botaoCancelar) {
-        botaoCancelar.addEventListener("click", fecharFormulario);
-    }
-
-    if (campoBusca) {
-        campoBusca.addEventListener("input", function() {
-            listarReservas(campoBusca.value);
-        });
-    }
+    campoBusca?.addEventListener("input", () => {
+        listarReservas(campoBusca.value);
+    });
 
     form.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -621,8 +793,11 @@ function iniciarReservas() {
             return;
         }
 
+        const reservaExistente = reservas.find(item => item.id === id);
+
         const reserva = {
             id: id || criarId(),
+            gerenteId: valor("gerenteId"),
             pet: valor("pet"),
             tutor: valor("tutor"),
             telefone: valor("telefone"),
@@ -630,11 +805,9 @@ function iniciarReservas() {
             entrada: entrada,
             saida: saida,
             valor: Number(valor("valor")) || 0,
-            status: valor("status"),
+            status: valor("status") || "Pendente",
             observacoes: valor("observacoes"),
-            criadoEm: id
-                ? (reservas.find(item => item.id === id)?.criadoEm || Date.now())
-                : Date.now()
+            criadoEm: reservaExistente?.criadoEm || Date.now()
         };
 
         if (
@@ -657,7 +830,7 @@ function iniciarReservas() {
             reservas.push(reserva);
         }
 
-        salvar(CHAVES.reservas, reservas);
+        if (!salvar(CHAVES.reservas, reservas)) return;
 
         fecharFormulario();
         listarReservas(campoBusca?.value || "");
@@ -674,18 +847,7 @@ function iniciarReservas() {
                 item => item.id === editar.dataset.editarReserva
             );
 
-            if (!reserva) return;
-
-            Object.keys(reserva).forEach(chave => {
-                definirValor(chave, reserva[chave]);
-            });
-
-            form.classList.remove("hidden");
-
-            form.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+            if (reserva) abrirFormulario(reserva);
         }
 
         if (excluir) {
@@ -695,7 +857,7 @@ function iniciarReservas() {
                 item => item.id !== excluir.dataset.excluirReserva
             );
 
-            salvar(CHAVES.reservas, reservasAtualizadas);
+            if (!salvar(CHAVES.reservas, reservasAtualizadas)) return;
 
             listarReservas(campoBusca?.value || "");
 
@@ -703,8 +865,6 @@ function iniciarReservas() {
         }
     });
 
-    // Atualiza o valor automaticamente quando as datas mudam,
-    // usando o valor da diária salvo nas configurações.
     function calcularValorReserva() {
         const entrada = valor("entrada");
         const saida = valor("saida");
@@ -718,24 +878,32 @@ function iniciarReservas() {
             (dataSaida - dataEntrada) / (1000 * 60 * 60 * 24)
         );
 
-        const configuracoes = carregarConfiguracoes();
-        const diaria = Number(configuracoes.diaria) || 0;
+        const diaria = Number(
+            carregarConfiguracoes().diaria
+        ) || 0;
 
         if (dias > 0 && diaria > 0) {
             definirValor("valor", (dias * diaria).toFixed(2));
         }
     }
 
-    elemento("entrada")?.addEventListener("change", calcularValorReserva);
-    elemento("saida")?.addEventListener("change", calcularValorReserva);
+    elemento("entrada")?.addEventListener(
+        "change",
+        calcularValorReserva
+    );
+
+    elemento("saida")?.addEventListener(
+        "change",
+        calcularValorReserva
+    );
 
     listarReservas();
 }
 
 
-/* =====================================================
+/* =========================================================
    6. CONFIGURAÇÕES
-   ===================================================== */
+   ========================================================= */
 
 function iniciarConfiguracoes() {
     const form = elemento("form-configuracoes");
@@ -755,7 +923,11 @@ function iniciarConfiguracoes() {
         const capacidade = Number(valor("capacidade"));
         const diaria = Number(valor("valor-diaria"));
 
-        if (!nome || !Number.isInteger(capacidade) || capacidade < 1) {
+        if (
+            !nome ||
+            !Number.isInteger(capacidade) ||
+            capacidade < 1
+        ) {
             alert("Informe o nome do hotel e uma capacidade válida.");
             return;
         }
@@ -765,11 +937,13 @@ function iniciarConfiguracoes() {
             return;
         }
 
-        salvarConfiguracoes({
-            nome: nome,
-            capacidade: capacidade,
-            diaria: diaria
+        const salvo = salvarConfiguracoes({
+            nome,
+            capacidade,
+            diaria
         });
+
+        if (!salvo) return;
 
         atualizarPainel();
 
@@ -778,9 +952,9 @@ function iniciarConfiguracoes() {
 }
 
 
-/* =====================================================
+/* =========================================================
    7. INICIALIZAÇÃO DO SISTEMA
-   ===================================================== */
+   ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function() {
     iniciarPets();
@@ -789,4 +963,6 @@ document.addEventListener("DOMContentLoaded", function() {
     iniciarConfiguracoes();
 
     atualizarPainel();
+
+    console.log("HotelPet iniciado com sucesso.");
 });
